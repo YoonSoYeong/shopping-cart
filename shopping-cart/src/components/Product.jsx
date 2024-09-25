@@ -1,22 +1,26 @@
 'use client';
-import React, { useContext } from 'react';
+
+import React from 'react';
 import styled from '@emotion/styled';
 import { Button } from './Button';
 import { useRouter } from 'next/navigation';
 import { PAGE } from '../constants/common';
 import { Box } from '../styles/StyleComponent';
-import { CartContext } from '../context/CartContext';
+import { useCartStore } from '../store/CartStore'; // Import Zustand store
 
 export const Product = ({ product, ...rest }) => {
     const router = useRouter();
-    const { cart, setCart } = useContext(CartContext);
+    const { cart, setCart } = useCartStore(); // Zustand cart store
 
+    // Handle adding product to cart
     const handleCart = (product) => {
+        // Check if the product is already in the cart
         if (cart.find((item) => item.id === product.id)) {
             alert('이미 장바구니에 추가된 상품입니다.');
             return;
         }
-        setCart((prev) => [...prev, product]);
+        // Add the product to the cart
+        setCart([...cart, product]); // Zustand cart update
         alert('장바구니에 추가되었습니다.');
     };
 
@@ -31,7 +35,9 @@ export const Product = ({ product, ...rest }) => {
                 <Description>{product.description}</Description>
             </Box>
             <Box gap={4} style={{ width: 'fit-content' }}>
+                {/* Navigate to the product detail page */}
                 <Button onClick={() => router.push(`${PAGE.PRODUCT}/${product.id}`)}>제품 설명 보기</Button>
+                {/* Add product to the cart */}
                 <Button onClick={() => handleCart(product)}>장바구니 담기</Button>
             </Box>
         </Item>
@@ -52,6 +58,7 @@ const Item = styled.div`
     padding: 16px;
     cursor: pointer;
 `;
+
 const Name = styled.div`
     font-family: 'Pretendard Variable', sans-serif;
     font-size: 20px;
@@ -70,6 +77,7 @@ const Name = styled.div`
     background-repeat: no-repeat;
     background-position: 0 100%;
 `;
+
 const Description = styled.div`
     font-family: 'Pretendard Variable', sans-serif;
     font-size: 15px;

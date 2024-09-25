@@ -6,6 +6,7 @@ import { GNB_TYPE, PRODUCTS } from '../../constants/common';
 import styled from '@emotion/styled';
 import { Product } from '../../components/Product';
 import { Box } from '../../styles/StyleComponent';
+import { useCartStore } from '../../store/CartStore';
 
 function HomePage() {
     return (

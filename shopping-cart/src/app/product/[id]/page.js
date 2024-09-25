@@ -5,13 +5,13 @@ import { Button } from '../../../components/Button';
 import { GNB } from '../../../components/GNB';
 import { GNB_TYPE, PRODUCTS } from '../../../constants/common';
 import styled from '@emotion/styled';
-import React, { useContext } from 'react';
-import { CartContext } from '../../../context/CartContext';
+import React from 'react';
+import { useCartStore } from '../../../store/CartStore';
 
 function ProductPage() {
     const { id } = useParams(); // Correctly get the dynamic route parameter
     const product = PRODUCTS.find((item) => item.id === parseInt(id));
-    const { cart, setCart } = useContext(CartContext);
+    const { cart, setCart } = useCartStore();
 
     const handleCart = (product) => {
         if (cart.find((item) => item.id === product.id)) {
